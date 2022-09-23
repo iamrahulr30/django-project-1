@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'seller/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% if title %}
+        <title>Django Blog - {{ title }}</title>
+    {% else %}
+        <title>Django Blog</title>
+    {% endif %}
+</head>
+<body>
+    <header class="top-header">
+        <h3 class='main-head'>
+            <!-- <div class="kid"> -->
+                <!-- <div class="maimg">
+                    <img class="imaimg" src="{% static 'seller/main.jpeg' %}" alt="">
+                </div> -->
+                Alina
+                <!-- <p class="hm">Alina</p> -->
+            <!-- </div> -->
+        </h3>
+        <div class="lt-menu">
+            <a class="optin" href="{% url 'user-home' %}"><i class="fa-sharp fa-solid fa-house"></i></a>
+            <a class="optin" href="{% url 'shoppage' %}"><i class="fa-solid fa-shop"></i></a>
+        {% if user.is_authenticated %}
+            <a class="optin" href="{% url 'user-cart' %}"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a class="optin" href="{% url 'user-profile' %}"><i class="fa-regular fa-user"></i></a>
+            <a class="optin" href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i></a>
+            <a class="optin" href="{% url 'user-orders' %}"><i class="fa-solid fa-bag-shopping"></i></a>
+        {% else %}
+            <a class="optin" href="{% url 'login' %}"><i class="fa-solid fa-power-off"></i></a>
+            <a class="optin" href="{% url 'register' %}">Register</a>
+        {% endif %}
+        </div>
+    </header>
+    <div class="msg">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="container">
+        {% if user.is_seller %}
+        <div class="to-seller">
+            <h2>Seller profile - </h2>
+            <a class="optin" href="{% url 'seller-home' %}"><i class="fa-sharp fa-solid fa-house"></i></a>
+            <a class="optin" href="{% url 'newproduct' %}"><i class="fa-brands fa-product-hunt"></i></a>
+            <a class="optin" href="{% url 'seller-update' %}"><i class="fa-regular fa-user"></i></a>
+            <a class="optin" href="{% url 'seller-order' %}">orders</a>
+            <a class="optin" href="{% url 'seller-graph' %}"><i class="fa-solid fa-chart-line"></i></a>
+        </div>   
+        {% endif %}
+        {% block content %}{% endblock content %}
+    </div>
+</body>

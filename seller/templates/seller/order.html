@@ -1,0 +1,99 @@
+{% extends 'user/base.html' %}
+{% block content %}
+<div class="media">
+    <h1>{{ user.sellerprofile.shop_name }}</h1><h2>by {{ user.sellerprofile.author.username }}</h2>
+</div>
+    <div class="searchbar">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ orderfilt.form }}
+    <button class="btn-search" type="submit">Search</button>
+    </form>
+    </div>
+<div class="cad">
+    <div class="cards">
+        <div class="heading">Total orders</div>
+        <hr>
+        <div class="num">{{ total }}</div>
+    </div>
+    <div class="cards">
+        <div class="heading">delivered</div>
+        <hr>
+        <div class="num">{{ delivered }}</div>
+    </div>
+    <div class="cards">
+        <div class="heading">Out for delivery</div>
+        <hr>
+        <div class="num">{{ out_for_delivery }}</div>
+    </div>
+    <div class="cards">
+        <div class="heading">Pending</div>
+        <hr>
+        <div class="num">{{ pending }}</div>
+    </div>
+</div>
+<div class="order">
+    <table>
+        <tr class="table-header">
+            <th class="table-cell">delivered</th>
+            <th class="table-cell">customer</th>
+            <th class="table-cell">name</th>
+            <th class="table-cell">email </th>
+            <th class="table-cell"> address </th>
+            <th class="table-cell">product </th>
+            <th class="table-cell">image </th>
+            <th class="table-cell">date_time </th>
+            <th class="table-cell">Update </th>
+            <th class="table-cell">edit </th>
+        </tr>
+        {% for order in page_obj %}
+            {% if order.delivered == 'pending' %}
+                <tr class="table-row">
+                <td  class="table-cell"><object class="code-red"></object></td>
+            {% elif order.delivered == 'delivered' %}
+                <td  class="table-cell"><object class="code-green"></object></td>
+            {% elif order.delivered == 'out for delivery' %}
+                <td  class="table-cell"><object class="code-orange"></object></td>
+            {% endif %}
+                <td  class="table-cell">{{ order.customer }}</td>
+                <td  class="table-cell">{{ order.name }}</td>
+                <td  class="table-cell">{{ order.email }}</td>
+                <td  class="table-cell">{{ order.address }}</td>
+                <td  class="table-cell">{{ order.product.title }}</td>
+                <td  class="table-cell"><a href="{{order.product.image.url}}">{{ order.product.image }}</a></td>
+                <td  class="table-cell">{{ order.date_time }}</td> 
+                <td  class="table-cell" ><a class='fot' href="{% url 'upgradeorder' order.pk %}">Update</a></td> 
+                <td  class="table-cell" ><a class='fot' href="{% url 'orderupdate'  order.pk %}">Edit</a></td> 
+                <td  class="table-cell">{{ order.product.author.shop_name }}</td> 
+                <!-- <td  class="table-cell">{{ order.author }}</td>  orderdelete-->
+                <!-- <td  class="table-cell">{{ user.sellerprofile }}</td>  -->
+                </tr>
+        {% empty %}
+        <div class="media">
+            <h1>no orders yet</h1>
+        </div>
+        {% endfor %}
+       
+    </table>      
+</div>
+<div class="pagin">
+    {{page_obj}}
+      {% if page_obj.has_previous %}
+        <a class="pag-btn" href="?page=1">First</a>
+        <a class="pag-btn" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="pag-btn-cvd" href="?page={{ num }}">{{ num }}</a>
+        {% elif  num > page_obj.number|add:'-3' and num < page_obj.number|add:'+3' %}
+          <a class="pag-btn" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="pag-btn" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="pag-btn" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends 'user/base.html' %}
+{% block content %}
+<div class="product">
+    <div class="heading">
+        <a class="title-bk" href="{% url 'shopmain' shop=product.author.pk %}">
+            {{product.author.shop_name}}
+        </a>
+    </div>
+    <div class="productpg">
+        <div class=posts-in>
+          <a href="{% url 'proimg' product.pk %}">
+            <img class="pro-img-in" src="{{ product.image.url }}"></a>
+            <h2>{{ product.title }}</h2>
+            <p>price : {{ product.price }}$</p>
+            <p>{{ product.detials }}</p>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <a class="btn-info" href="{{ product.image.url }}" download="{{ product.image.url }}">download me  here :)</a>
+        {% if user.is_anonymous == False %}
+            <a class="btn-info" href="{% url 'add' product.id %}">Add to Cart</a>
+        {% endif %}
+        <a class="btn-info" href="{% url 'buy' product.id %}">Buy</a>
+    </div>
+</div>
+{% endblock content %}

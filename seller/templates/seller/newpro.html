@@ -1,0 +1,37 @@
+{% extends "user/base.html" %}
+{% block content %}
+<div class="media">
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- <ul>
+        <li>
+            <label id="Title">title</label>
+            <input type="text" id="intitle" >
+        </li>
+        <li>
+        <label id="image">image</label>
+        <input type="file" multiple id="image" >
+        </li>
+        <li>
+        <label id="price">price</label>
+        <input type="number" id="price" >
+        </li>
+        <li>
+        <label id="detials">detials</label>
+        <input type="text" id="detials" >
+        </li>
+        <li>
+        <label id="quantity">quantity</label>
+        <input type="text" id="quantity" >
+        </li>
+    </ul> -->
+    <fieldset class="form-group">
+        <legend class="register">New Product</legend>
+        {{ form.as_p }}
+    </fieldset>
+    <div class="form-group">
+        <button class="btn-info" type="submit">Post Product</button>
+    </div>
+</form>
+</div>
+{% endblock content %}

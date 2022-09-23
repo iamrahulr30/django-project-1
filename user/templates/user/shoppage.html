@@ -1,0 +1,21 @@
+{% extends "user/base.html" %}
+{% block content %}
+<div class="media">
+    <div class="round-img-bg">
+        <a href="{{ shop.proimage.url }}">
+        <img class="rounded-account-img-bg" src="{{ shop.proimage.url }}"></a>
+      </div>
+      <h2>{{ shop.shop_name }}</h2>
+    {% for product in products %}
+        <a class="nxt-pg" href="{% url 'propg' product.pk %}">
+        <div class="main-products">
+            <div class=posts>
+                <img class="pro-img" src="{{ product.image.url }}">
+                <h2>{{ product.title }}</h2>
+                <p>{{ product.price }}{{ product.content}}{{ product.quantity }}</p>
+            </div>
+        </div>
+        </a>
+    {% endfor %}
+</div>
+{% endblock content %}

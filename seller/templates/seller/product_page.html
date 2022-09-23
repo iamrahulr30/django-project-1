@@ -1,0 +1,20 @@
+{% extends 'user/base.html' %}
+{% block main %}
+<div class="media">
+<div class="main-products-in">
+    <a href="">{{ product.author }}/{{product.author.shop_name}}</a>
+    <div class=posts-in>
+        <a href="">{{ product.author }}/{{product.author.shop_name}}</a>
+        <a href="{{ product.image.url }}"><img class="pro-img-in" src="{{ product.image.url }}"></a>
+        <h2>{{ product.title }}</h2>
+        <p>{{ product.price }}</p>
+    </div>
+</div>
+<div class="form-group">
+    <a class="btn-info" src="{{ product.image.url }}" download="{{ product.image.url }}">down</a>
+    <a class="btn-info" href="{{ product.image.url }}" download="{{ product.image.url }}">down1 :)</a>
+    <a class="btn-info" href="{% url 'productupdate' product.id %}">Update Product</a>
+    <a class="btn-info" href="{% url 'buy' product.id %}">Buy</a>
+</div>
+</div>
+{% endblock main %}

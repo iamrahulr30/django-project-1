@@ -1,0 +1,20 @@
+{% extends 'user/base.html' %}
+{% block content %}
+<div class="product">
+  <div class="productpg">
+    <a href="">{{ product.author }}/{{product.author.shop_name}}</a>
+      <div class=posts-in>
+          <a href="">{{ product.author }}/{{product.author.shop_name}}</a>
+          <a href="{{ product.image.url }}">
+          <img class="pro-img-in" src="{{ product.image.url }}"></a>
+          <h2>{{ product.title }}</h2>
+          <p>{{ product.price }}{{ product.detials }}{{ product.quantity }}</p>
+      </div>
+  </div>
+  <div class="buttons">
+    <a class="btn-info" href="{{ product.image.url }}" download="{{ product.image.url }}">download me in here :)</a>
+    <a class="btn-info" href="{%  url 'productupdate' product.pk %}">Update</a>
+    <a class="btn-del"href="">Delete Product</a>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends 'user/base.html' %}
+{% block content %}
+      <div class="media">
+        <div class="round-img">
+          <img class="rounded-account-img" src="{{ user.sellerprofile.proimage.url }}"> 
+        </div>
+        <div class="media-body">
+          
+          <h2 class="account-heading">{{ user.sellerprofile.shop_name }}</h2>
+          <h3 class="account-heading">by {{ user.username }}</h3>
+          <p class="text-secondary">{{ user.email }}</p>
+          <p> total no of products {{ no }}</p>
+        </div>
+      </div>
+    <div class="home-pro">
+    {% for product in page_obj %}
+      <a class="nxt-pg" href="{% url 'seller-product' product.pk %}">
+      <div class="main-products">
+          <div class=posts>
+              <img class="pro-img" src="{{ product.image.url }}">
+              <h2>{{ product.title }}</h2>
+              <p>{{ product.price }}</p>
+              <!-- {{ product.content}}{{ product.quantity }} -->
+          </div>
+      </div>
+      </a>
+    {% endfor %}
+    </div>
+    <div class="pagin">
+        {% if page_obj.has_previous %}
+          <a class="pag-btn" href="?page=1">First</a>
+          <a class="pag-btn" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+  
+        {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+            <a class="pag-btn-cvd" href="?page={{ num }}">{{ num }}</a>
+          {% elif  num > page_obj.number|add:'-3' and num < page_obj.number|add:'+3' %}
+            <a class="pag-btn" href="?page={{ num }}">{{ num }}</a>
+          {% endif %}
+        {% endfor %}
+  
+        {% if page_obj.has_next %}
+          <a class="pag-btn" href="?page={{ page_obj.next_page_number }}">Next</a>
+          <a class="pag-btn" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+      </div>
+{% endblock content %}

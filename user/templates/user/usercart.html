@@ -1,0 +1,30 @@
+{% extends "user/base.html" %}
+{% block content %}
+<div class="buypg">
+<h2 class="account-heading">{{ user.username }}</h2>
+<p class="text-secondary">{{ user.email }}</p>
+{% for product in products %}
+    {% for i in product%}
+        <a class="nxt-pg" href="{% url 'propg' i.pk %}">
+        <div class="cart-products">
+            <div class=posts>
+                <img class="cart-proimg" src="{{ i.image.url }}">
+                <div class="detials">
+                <h2>{{ i.title }}</h2>
+                <p>{{ i.price }}</p>
+                <p>{{ i.shop }}</p>
+                <a class="btn-info" href="{% url 'remove' i.pk %}">Remove</a>
+                </div>
+            </div>
+        </div>
+        </a>
+    {% endfor %}   
+    {% empty %}
+        <h1>your cart is empty</h1>
+{% endfor %}
+<div class="form-group">
+        <h3>total price : {{ total_price }}</h3>
+    <a class="btn-info" href="{% url 'buycart'  %}">Buy</a>
+</div>
+</div>
+{% endblock content %}

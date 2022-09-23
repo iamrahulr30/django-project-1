@@ -1,0 +1,28 @@
+{% extends 'user/base.html' %}
+{% block content %}
+<div class="buypg">
+{% for product in products %}
+    {% for i in product%}
+        <a class="nxt-pg" href="{% url 'propg' i.pk %}">
+        <div class="main-products">
+            <div class=posts>
+                <img class="pro-img" src="{{ i.image.url }}">
+                <h2>{{ i.title }}</h2>
+                <p>{{ i.price }}</p>
+            </div>
+        </div>
+        </a>
+        {% endfor %}    
+{% endfor %}
+<form  method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="register">Purchase</legend>
+        {{ form.as_p }}
+    </fieldset>
+    <div class="form-group">
+        <button class="btn-info" type="submit">Place order</button>
+    </div>
+</form>
+</div>
+{% endblock content %}

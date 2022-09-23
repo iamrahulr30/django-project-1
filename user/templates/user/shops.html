@@ -1,0 +1,20 @@
+{% extends "user/base.html" %}
+{% block content %}
+<form class="filter" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ myFilter.form }}
+<button class="btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+</form>
+<div class="shoppg">
+    {% for shop  in shops %}
+        <a class="nxt-pg" href="{% url 'shopmain' shop=shop.pk   %}"> 
+        <div class="shop-space">
+            <div class=posts>
+                <img class="rounded-img" src="{{ shop.proimage.url }}">
+                <a class="title-bk-sm">{{ shop.shop_name }}</a>
+            </div>
+        </div>
+        </a>
+    {% endfor %}
+</div>
+{% endblock content %}
